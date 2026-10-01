@@ -1,21 +1,29 @@
-import express from "express"
-import database from "./configs/database.js";
-import { bookstoreRouter } from "./routes/bookstore route.js";
-
+import express from 'express';
+import 'dotenv/config'
+import db from './configs/db.js';
+import bodyParser from 'body-parser';
+import cors from "cors";
+import userRouter from './routes/user.route.js';
+import productRouter from './routes/product.route.js';
+import categoryRouter from './routes/category.route.js';
+const app = express();
 const port = 8081;
 
-const app = express();
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended : true}));
 
-app.use(express.json());
+app.use(cors());
 
-app.use('/api/bookstore',bookstoreRouter);
+app.use('/api/user',userRouter);
+app.use('/api/product',productRouter);
+app.use('/api/category',categoryRouter);
 
 
 app.listen(port,(err)=>{
     if(err){
         console.log(err);
     }else{
-        console.log("server started");
-        console.log("http://localhost:"+port);
+        console.log("server start");
+        console.log("http://localhost:"+8081);
     }
 })
